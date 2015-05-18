@@ -1,0 +1,113 @@
+﻿<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<title>物业维修</title>
+		<link rel="stylesheet" type="text/css" href="css_wap/style.css">
+		<script src="js/zepto.min.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/tool.js"></script>
+
+	</head>
+
+	<body>
+		<header class="ui-header">
+			<h1>商家优惠</h1>
+			<div class="ui-header-left">
+				<a class="ui-header-ico-home" href="index.html"></a>
+			</div>
+			<div class="ui-header-right">
+				<a id="openMenu" class="ui-header-ico-menu" href="javascript:;#mp.weixin.qq.com"></a>
+			</div>
+		</header>
+
+		<ul id="menu">
+			<li class="icon"><a href="sjyh.html">商家优惠</a>
+			</li>
+			<li class="icon"><a href="wywx.html">物业维修</a>
+			</li>
+			<li class="icon"><a href="ylfw.html">医疗服务</a>
+			</li>
+			<li class="icon"><a href="jzfw.html">家政服务</a>
+			</li>
+		</ul>
+		<div class="c_list">
+			<div class="tpic">
+				<img src="images/test.jpg" />
+			</div>
+			<div class=" list_div">
+				<ul class="list_div_UL">
+					<li><a href="content2.html">家乐福连锁新开张满100立返20元抵用券，欢迎新老顾客前来购物。</a><span><em>浏览 266 次</em>2015-01-20</span>
+					</li>
+					<li><a href="content.html">至诚电器城即日起所有电器9折起，两件8折起！返利大酬宾！</a><span><em>浏览 170 次</em>2015-01-03</span>
+					</li>
+					<li><a href="content.html">曾今生鲜店开业在即，所有生冷海鲜满100元立减20！先抢先得！</a><span><em>浏览 168 次</em>2014-12-21</span>
+					</li>
+					<li><a href="content3.html">小米之家开业筹宾，七天之内持小米设备免费维修，免费贴膜。</a><span><em>浏览 173 次</em>2014-11-21</span>
+					</li>
+					<li><a href="content.html">牛掌柜火锅店酬宾活动，五人以上就餐送饮料一瓶，欢迎品尝！</a><span><em>浏览 365 次</em>2014-10-21</span>
+					</li>
+					<div class="more click_more" style="clear:both;">点击查看更多</div>
+				</ul>
+				<div class="pageing">
+					<span class="prev"><a href="?cat_id=$cat_id&cur_page=$turnpage.prev_num">上一页</a></span>
+					<span class="next"><a href="?cat_id=$cat_id&cur_page=$turnpage.next_num">下一页</a></span>
+				</div>
+				<div class="clearBoth"></div>
+			</div>
+		</div>
+		<footer>
+			<div class="copy tc">西安德塔信息科技有限公司</div>
+		</footer>
+		<script>
+			$(function() {
+				get_article(831);
+			});
+
+			function get_article(id) {
+				var resultnum = 5;
+				var start = parseInt($('.more').attr('data'));
+				if (start > 300) {
+					$(".more").html("不能加载更多的结果了");
+					return false;
+				}
+				$(".more").attr('data', start + resultnum);
+				var str = '';
+				$.post('/web/800154/?ajax=getarticle', {
+						start: start,
+						sortid: id,
+						limit: resultnum,
+						style: 'json'
+					},
+					function(value) {
+						//var v=eval(value);
+						if (value == "nodata" || value == '') {
+							$(".more").html("没有更多的数据了");
+						} else {
+							var data = value.data;
+							$.each(data, function(i, n) {
+								str += '<dd><div class="pic"><a href="' + n.url + '#mp.weixin.qq.com"><img src="' + n.avs_thumb_pic + '" width="84" height="70" /></a></div>';
+								str += '<div class="txt">';
+								str += '<h3><a href="' + n.url + '#mp.weixin.qq.com">' + n.title + '</a></h3>';
+								str += '<p>' + n.abs + '</p></div></dd>';
+							});
+						}
+						$("#arlist").append(str);
+					}, "json");
+			}
+		</script>
+		<div style="display:none"></div>
+		<script>
+			var allA = document.getElementsByTagName('a');
+			for (var i = 0; i < allA.length; i++) {
+				if (allA[i].href.indexOf('tel')) {
+					allA[i].href = allA[i].href + '#mp.weixin.qq.com';
+				}
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<title>智邻小区</title>
+		<link rel="stylesheet" type="text/css" href="css_wap/style.css">
+		<script src="js/jquery-1.5.min.js"></script>
+		<script src="js/zepto.min.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/tool.js"></script>
+		<script src="js/top.js"></script>
+	</head>
+
+	<body>
+		<header class="ui-header">
+			<h1>详细内容</h1>
+			<div class="ui-header-left">
+				<a class="ui-header-ico-back" href="index2.html"></a>
+			</div>
+			<div class="ui-header-right">
+				<a class="ui-header-ico-share" href=""></a>
+			</div>
+		</header>
+		<div class="c_content">
+			<div class="catpic">
+				<img src="images/家政服务广告图.jpg" width="100%">
+			</div>
+			<div class="amain">
+				<div class="filter"></div>
+				<div class="catname">家政服务</div>
+				<div class="title">找家政，上58,58同城，一个神奇的网站！</div>
+				<div class="info"><span class="zuozhe">智邻小区</span><span>02-20 16:48 </span><span class="hot">点击：316</span>
+				</div>
+				<div class="cont">
+					<p>
+					这是一个神奇的网站
+					<br>
+					58同城
+					<br>
+					不用中介找家政
+					<br>
+					不用花钱招人才
+					<br>
+					58同城
+					<br>
+					一折吃喝玩乐
+					<br>
+					闲置物品能换钱
+					<br>
+					一个神奇的网站
+					<img alt=" 广告图" src="images/58同城logo.png">
+					<br></p>
+
+
+				</div>
+			</div>
+			<div id="top">
+				<img src="images/top.png" id="goTopBtn">
+			</div>
+			<footer>
+				<div class="copy tc">西安德塔信息科技有限公司</div>
+				<div class="tecl tc"></div>
+			</footer>
+			<script>
+			</script>
+			<div style="display:none"></div>
+			<script>
+				var allA = document.getElementsByTagName('a');
+							for(var i=0;i<allA.length;i++){
+								if(allA[i].href.indexOf('tel')){
+								  allA[i].href = allA[i].href + '#mp.weixin.qq.com';
+								}
+							}
+			</script>
+	</body>
+
+</html>

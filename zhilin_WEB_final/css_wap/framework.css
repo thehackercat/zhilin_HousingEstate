@@ -1,0 +1,48 @@
+/* CSS Document */
+div, header, footer, section, article, nav, button, a, p, img, ul, ol, blockquote, form, fieldset, textarea, input, label, iframe, code, pre {
+	display: block;
+	overflow: hidden;
+	position: relative;
+}
+
+.toogle_wrap {}
+
+/*订阅页面*/
+.c_dy{ margin:6px; border:1px solid #dcdcdc; border-radius:5px; padding:9px; background:#FFF;}
+.pageTitle {border-bottom: 1px solid #f0f0f0;padding-bottom: 5px;margin-top: 10px;margin-bottom: 23px;}
+.pageTitle h1{ text-align:center; font-weight:bold; color:#265840; letter-spacing:2px;}
+.pageTitle p{color:#848484;font-size:0.875em;}
+
+
+.trigger{margin-bottom: 10px; border:1px  dotted #A0B2CD ; border-radius:3px; }
+.accordionButton {padding-left: 6px;height: 36px;line-height: 36px;color: #666;}
+
+.accordionItemWrapper {
+	margin-bottom: 27px;
+}
+
+.accordionButton .accordionButtonIcon {height: 16px;width: 16px;margin-right: 12px;display: inline-block;margin-top: 10px;margin-left: 6px;float: right;background: url(images/accordionButtonBg.png) 0 0 no-repeat;}
+.accordionButton .accordionButtonTitle {float: left; color:#3879D9;  padding-left:10px;}
+.accordionButton:hover {text-decoration: none;}
+.currentAccordion .accordionButtonIcon {background-position: 0px -16px;}
+
+.accordionContentWrapper {
+	display: none;
+}
+.accordionContent {padding-top:6px; padding-left:10px;}
+.dy_UL{}
+.dy_UL li{ width:33%;display:block; float:left; margin-bottom:13px;}
+.dy_UL li .dy_item{ width:96%; min-width:100px;; height:34px; background:#FFF; border:1px solid #cdcdcd;}
+.dy_item label{ height:34px; line-height:34px; padding-left:9px;;}
+.dy_UL .checkbox{ float:right;}
+.dy_UL  .checkbox{font-size:10px; color:#ccc; background:url(images/box.png) 0 0 no-repeat; background-size:100%; -webkit-appearance:none; -moz-appearance:none; border:0; border:none; vertical-align:middle; width:36px; height:36px;}
+.dy_UL  .checked{font-size:10px; color:#ccc; background:url(images/check.png) 0 0 no-repeat; background-size:100%; -webkit-appearance:none; -moz-appearance:none; border:0; border:none; vertical-align:middle; width:36px; height:36px;}
+
+.accordionContentWrapper .accordionContent > *:last-child {
+	margin-bottom: 0px;
+}
+
+
+
+
+

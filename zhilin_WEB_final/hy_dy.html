@@ -1,0 +1,189 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="shopey, premium, mobile, template, HTML, CSS" />
+<meta name="Description" content="Premium mobile HTML/CSS template." />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>智邻小区</title>
+<link rel="stylesheet" type="text/css" href="css_wap/style.css">
+<link rel="stylesheet" type="text/css" href="css_wap/me.css">
+<link rel="stylesheet" type="text/css" href="css_wap/framework.css">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/effects.jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/jquery.nivo-slider.min.js"></script>
+<script type="text/javascript" src="js/jquery.colorbox.min.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<script>
+$(function(){
+	//单独选择某一个
+	$("input[name='check_item']").click(function(){
+			var index=$("input[name='check_item']").index(this);
+			$("input[name='check_item']").eq(index).toggleClass("checked");//伪复选
+	});	
+	//全选
+	$("#check_all,#box_all").click(function(){
+     $("input[name='check_item']").attr("checked",$(this).attr("checked"));
+	 $("input[name='check_item'],#check_all,#box_all").toggleClass("checked");
+	});
+
+});
+</script>
+</head>
+<body class="bg_ec"> 
+<header class="ui-header">
+<h1>订阅列表</h1>
+    <div class="ui-header-left"><a class="ui-header-ico-home" href="index.html"></a></div>
+    <div class="ui-header-right">
+    	<a id="openMenu" class="ui-header-ico-menu" href="javascript:;#mp.weixin.qq.com"></a>    	
+    </div>
+</header>
+<div class="c_dy">
+<div class="pageTitle">
+	<h1>消息定制</h1>
+      	<p>勾选您所需要订阅的内容</p>
+</div> 
+      <!-- faqs start --> 
+      <!-- accordion wrapper starts -->
+      <div class="toogle_wrap"> 
+        <!-- accordion item wrapper starts -->
+        <div class="trigger"> 
+        	<a href="" class="accordionButton"><span class="accordionButtonIcon"></span><span class="accordionButtonTitle">产品分类A</span></a>
+          	<div class="accordionContentWrapper">
+           		 <div class="accordionContent">
+            		<ul class="dy_UL">
+                                <li>
+                                <div class="dy_item">
+                                         <input type="checkbox" class="checkbox " name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                                <li>
+                                <div class="dy_item">
+                                         <input type="checkbox" class="checkbox " name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                                <li>
+                                <div class="dy_item">
+                                         <input type="checkbox" class="checkbox " name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                                <li>
+                                <div class="dy_item">
+                                         <input type="checkbox" class="checkbox " name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                                <li >
+                                <div class="dy_item  ">
+                                         <input type="checkbox" class="checkbox checked" name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                        </ul>
+            </div>
+          </div>
+        </div>
+        <!-- accordion item wrapper ends --> 
+        <!-- accordion item wrapper starts -->
+        <div class="trigger"> 
+        	<a href="" class="accordionButton"><span class="accordionButtonIcon"></span><span class="accordionButtonTitle">产品分类A</span></a>
+          	<div class="accordionContentWrapper">
+           		 <div class="accordionContent">
+            		<ul class="dy_UL">
+                                <li>
+                                <div class="dy_item">
+                                         <input type="checkbox" class="checkbox " name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                                <li>
+                                <div class="dy_item">
+                                         <input type="checkbox" class="checkbox " name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                                <li>
+                                <div class="dy_item">
+                                         <input type="checkbox" class="checkbox " name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                                <li>
+                                <div class="dy_item">
+                                         <input type="checkbox" class="checkbox " name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                                <li >
+                                <div class="dy_item  ">
+                                         <input type="checkbox" class="checkbox checked" name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                        </ul>
+            </div>
+          </div>
+        </div>
+        <!-- accordion item wrapper ends --> 
+        <!-- accordion item wrapper starts -->
+        <div class="trigger"> 
+        	<a href="" class="accordionButton"><span class="accordionButtonIcon"></span><span class="accordionButtonTitle">产品分类A</span></a>
+          	<div class="accordionContentWrapper">
+           		 <div class="accordionContent">
+            		<ul class="dy_UL">
+                                <li>
+                                <div class="dy_item">
+                                         <input type="checkbox" class="checkbox " name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                                <li>
+                                <div class="dy_item">
+                                         <input type="checkbox" class="checkbox " name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                                <li>
+                                <div class="dy_item">
+                                         <input type="checkbox" class="checkbox " name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                                <li>
+                                <div class="dy_item">
+                                         <input type="checkbox" class="checkbox " name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                                <li >
+                                <div class="dy_item  ">
+                                         <input type="checkbox" class="checkbox checked" name="check_item" id="check_item">
+                                         <label for="" class="" data-phase-id="">葡萄</label>
+                                </div>                        
+                                </li>
+                        </ul>
+            </div>
+          </div>
+        </div>
+        <!-- accordion item wrapper ends --> 
+      </div>
+      <!-- accordion wrapper ends --> 
+      <!-- faqs end -->
+      <div class="pageBreakBoth"></div>
+        <div class="form-item">
+        <input name="submit" type="submit" class="form_submit" value="保存提交">
+       </div>    
+
+
+
+</div>
+<footer>
+<div class="copy tc">西安德塔信息科技有限公司</div>
+</footer>
+</body>
+</html>
+

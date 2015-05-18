@@ -1,0 +1,1118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<link type="text/css" rel="stylesheet" href="http://cdn.xinm123.com/css/wap_style.css" />
+		<script src="http://cdn.xinm123.com/js/jquery.js" type="text/javascript"></script>
+		<title>test</title>
+		<!---统计代码开始--->
+		<script>
+			var _hmt = _hmt || [];
+			(function() {
+				var hm = document.createElement("script");
+				hm.src = "//hm.baidu.com/hm.js?485f5542c6e1636a246990841fac2569";
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(hm, s);
+			})();
+		</script>
+		<!---统计代码结束--->
+		<script language="javascript">
+			function setTab(name, cursel, n) {
+				for (i = 1; i <= n; i++) {
+					var menu = document.getElementById(name + i);
+					var con = document.getElementById("con_" + name + "_" + i);
+					menu.className = i == cursel ? "current" : "";
+					con.style.display = i == cursel ? "block" : "none";
+				}
+			}
+		</script>
+		<SCRIPT src="http://www.xinm123.com/statics/js/price_base.js" type=text/javascript></SCRIPT>
+		<SCRIPT src="http://cdn.xinm123.com/js/jquery.js" type=text/javascript></SCRIPT>
+		<script type="text/javascript">
+			var price_data = eval(price_base);
+
+			function price(arr, w) {
+				var t = new Array("正典生物特约新牧猪价指数", "三仪集团特约新牧鸡价指数")
+				var c;
+				var j;
+				var a = "";
+				var b = arr['percent'];
+				b = String(arr['percent']);
+				b = b.replace("-", "");
+				if (arr['increase'] >= 0) {
+					c = "red";
+					j = "&uarr;";
+					a = "+";
+				} else {
+					c = "green";
+					j = "&darr;"
+				}
+				return '<strong>' + t[w] + ': </strong><span class="' + c + '-big">' + arr['price'] + '</span>&nbsp;&nbsp;<span style="font-size: 12px;" class="' + c + '">' + a + arr['increase'] + '&nbsp;&nbsp;&nbsp;' + j + b + '</span>';
+			}
+
+			function setPrice() {
+				$("#pig_price").html(price(price_data[0]['pig'], 0));
+				$("#chicken_price").html(price(price_data[0]['chicken'][0], 1));
+			}
+
+			 //---------------end现价------------
+		</script>
+		<script type="text/javascript">
+			var alldata = new Array;
+
+			function getdata() {
+				var time = new Array("week", "month", "quarter", "year");
+				$.each(time, function(n, d) {
+					var url = "http://www.xinm123.com/graphic_data.php?type=pz&time=" + d + "&pz=pig&callback=?";
+					$.getJSON(url, function(data) {
+						tubiao("pig_tb_" + n, data['x'], data['data'][0]['data'], data['data'][0]['name']);
+					});
+					var url = "http://www.xinm123.com/graphic_data.php?type=pz&time=" + d + "&pz=chicken_0_1_2_3&callback=?";
+					$.getJSON(url, function(data) {
+						tubiao2("chicken_tb_" + n, data['x'], data['data'], data['data'][0]['name']);
+					});
+				})
+			}
+			$(function() {
+				getdata();
+				setPrice();
+			});
+		</script>
+		<style type="text/css">
+			#slideshow {
+				position: relative;
+				height: 195px;
+				width: 320px;
+				border: 1px solid #ddd;
+				margin: 0 auto 15px;
+			}
+			#slideshow div {
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 8;
+				opacity: 0.0;
+				height: 195px;
+				overflow: hidden;
+				background-color: #FFF;
+			}
+			#slideshow div.current {
+				z-index: 10;
+			}
+			#slideshow div.prev {
+				z-index: 9;
+			}
+			#slideshow div img {
+				display: block;
+				border: 0;
+				margin-bottom: 10px;
+			}
+			#slideshow div span {
+				display: none;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				height: 50px;
+				line-height: 50px;
+				background: #000;
+				color: #fff;
+				width: 320px;
+			}
+			#slideshow div.current span {
+				display: block;
+			}
+		</style>
+		<script type="text/javascript">
+			function ShowNav() {
+				document.getElementById('Nav').style.display = "block";
+			}
+
+			function slideSwitch() {
+				var $current = $("#slideshow div.current");
+				// 判断div.current个数为0的时候 $current的取值
+				if ($current.length == 0) $current = $("#slideshow div:last");
+				// 判断div.current存在时则匹配$current.next(),否则转到第一个div
+				var $next = $current.next().length ? $current.next() : $("#slideshow div:first");
+				$current.addClass('prev');
+				$next.css({
+					opacity: 0.0
+				}).addClass("current").animate({
+					opacity: 1.0
+				}, 1000, function() {
+					//因为原理是层叠,删除类,让z-index的值只放在轮转到的div.current,从而最前端显示
+					$current.removeClass("current prev");
+				});
+			}
+			$(function() {
+				$("#slideshow span").css("opacity", "0.7");
+				$(".current").css("opacity", "1.0");
+				// 设定时间为3秒(1000=1秒)
+				setInterval("slideSwitch()", 3000);
+			});
+			$(document).ready(function(e) {
+				$(".nav_tag").click(function() {
+					$(this).toggleClass("current");
+					$(".top_nav").toggle();
+				});
+			});
+
+			 //登录
+			$(function() {
+				$("#myform").submit(function() {
+					var username = $("#username").val();
+					var password = $("#password").val();
+					if (username == "" || password == "") {
+						alert("用户名或密码不能为空！");
+						return false;
+					}
+
+					var data = $(this).serialize(); //序列化表单数据 
+					$.getJSON("http://www.xinm123.com/index.php?m=member&a=login&actionajax=ajax&callback=?", data, function(json) {
+
+						if (json.success == 1) {
+							alert(json.username);
+							//var str="欢迎你，"+json.username+"！";
+							//$(".logoIn").html(str);
+
+						} else if (json.success == 2) {
+							//	alert("密码错误");	
+						} else {
+							//alert("用户不存在");	
+						}
+
+					});
+					return false;
+				});
+			});
+		</script>
+
+	</head>
+
+	<body id="top" style="width:100%; margin:0 auto;">
+
+				<div class="logoIn">
+					<iframe src="http://www.xinm123.com/index.php?m=comment&c=index&a=init&commentid=content_43-329245-1&iframe=1&login=2" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+				</div>
+				<div id="Nav" style=" display:none" class="nav_list">
+					<ul>
+						<li><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=280">价格行情</a>
+						</li>
+						<li style="width:54px;"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=40">资讯</a>
+						</li>
+						<li style="width:54px;"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=215">技术</a>
+						</li>
+						<li style="width:54px;"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_channel&catid=10">养猪</a>
+						</li>
+						<li style="width:54px;"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_channel&catid=11">养鸡</a>
+						</li>
+						<li><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=277">媒体专栏</a>
+						</li>
+						<li style="width:54px;"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=192">企业</a>
+						</li>
+						<li style="width:54px;"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=15">饲料</a>
+						</li>
+						<li style="width:54px;"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=16">兽药</a>
+						</li>
+						<li style="width:54px;"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=55">活动</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="nav">
+				<a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=40">资讯</a>
+				<a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=280">行情</a>
+				<a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=215">技术</a>
+				<a href="http://wap.xinm123.com/index.php?m=wap&a=wap_channel&catid=11">养鸡</a>
+				<a href="http://wap.xinm123.com/index.php?m=wap&a=wap_channel&catid=10">养猪</a>
+			</div>
+
+			<style type="text/css">
+				.ad {
+					width: 100%;
+					margin: 0 auto;
+				}
+				.ad img {
+					/*width:320px; height:auto;*/
+					
+					width: 100% !important;
+					height: auto !important;
+					min-height: 48px !important;
+					margin: 0 auto;
+				}
+				.title_list li a {
+					max-height: 36px;
+					overflow: hidden;
+					padding-right: 10px;
+				}
+				.top2 h2 {
+					height: 25px;
+					overflow: hidden;
+				}
+				.top2 {
+					overflow: hidden;
+				}
+			</style>
+
+			<div class="ad" style="/*width:320px;*/ margin:0 auto; padding:5px 0;">
+				<script language="javascript" src="http://www.xinm123.com/index.php?m=poster&c=index&a=show_poster&id=145"></script>
+			</div>
+			<div class="search" style=" display:none">
+				<form action="" method="post">
+					<div class="text">
+						<input type="text" class="s_t" />
+					</div>
+					<a href="#" class="btn">
+						<img src="http://cdn.xinm123.com/images/images_wap/search.gif" />
+					</a>
+				</form>
+			</div>
+			<ul>
+				<li>
+					<div class="col">
+						<div>
+							<!--jiaodiantu -->
+
+							<div id="slideshow" style="border:none;">
+
+
+								<div class="current">
+									<a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=292&id=388753&remains=true">
+										<img width="320" height="195" src="http://img.xinm123.com/2015/0205/thumb_320_195_20150205041201705.jpg" alt="猪场“钱难赚，人难留” 咋破？" />
+										<span>猪场“钱难赚，人难留” 咋破？</span>
+									</a>
+								</div>
+
+
+								<div>
+									<a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=56&id=388562&remains=true">
+										<img width="320" height="195" src="http://img.xinm123.com/2015/0203/thumb_320_195_20150203114446542.jpg" alt="“外来媳妇”作代言，生鲜鸡掀起品牌浪潮" />
+										<span>“外来媳妇”作代言，生鲜鸡掀起品牌浪潮</span>
+									</a>
+								</div>
+
+
+								<div>
+									<a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388561&remains=true">
+										<img width="320" height="195" src="http://img.xinm123.com/2015/0203/thumb_320_195_20150203063339261.jpg" alt="【风云榜】扬翔：高度产业链集成的国家核心场" />
+										<span>【风云榜】扬翔：高度产业链集成的国家核心场</span>
+									</a>
+								</div>
+
+
+								<div>
+									<a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388560&remains=true">
+										<img width="320" height="195" src="http://img.xinm123.com/2015/0203/thumb_320_195_20150203062951503.jpg" alt="【风云榜】快大：独特的中草药产品炼就行业新锐" />
+										<span>【风云榜】快大：独特的中草药产品炼就行业新锐</span>
+									</a>
+								</div>
+
+
+
+							</div>
+							<!--jiaodiantu -->
+
+						</div>
+						<div class="price">
+							<span id="pig_price" style=" width:200px;"></span>
+							<br>
+							<span id="chicken_price" style=" width:200px;"></span>
+						</div>
+						<ul class="title_list">
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=292&id=388753&remains=true"><b>猪场“钱难赚，人难留” 咋破？</b></a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=60&id=388664&remains=true"><b>广东鸡贩外地抢鸡 消费却遭H7遇冷</b></a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=48&id=388868&remains=true"><b>广东2015政府采购猪瘟苗中标价降50%</b></a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=40&id=388867&remains=true"><b>广东开展“动物防疫消毒灭原日”活动</b></a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=47&id=388843&remains=true"><b>临储收购进度快 优质玉米供应有忧</b></a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=47&id=388842&remains=true"><b>饲料行业逐渐认可基差交易</b></a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=52&id=388831&remains=true"><b>农业厅核发2014年41个《种畜禽生产经营许可证》</b></a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=43&id=388829&remains=true"><b>2014年中国进口猪肉65%来自欧盟</b></a>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+			<div class="nav topborder2">
+				<a id="child1" onclick="setTab('child',1,5)" href="javascript:void(0)" class="current">养鸡</a>
+				<a id="child2" onclick="setTab('child',2,5)" href="javascript:void(0)">资讯</a>
+				<a id="child3" onclick="setTab('child',3,5)" href="javascript:void(0)">行情</a>
+				<a id="child4" onclick="setTab('child',4,5)" href="javascript:void(0)">技术</a>
+				<a id="child5" onclick="setTab('child',5,5)" href="javascript:void(0)">疾病</a>
+			</div>
+			<ul>
+				<li id="con_child_1">
+					<div class="col">
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=44&id=388656&remains=true">
+									<li>
+										<h2>台湾男子捡2.59吨禽流感病死鸡喂鱼</h2>
+										<img src="http://img.xinm123.com/2015/0204/thumb_113_75_20150204024043524.jpg" width="113" height="75" />
+										<p>据台湾媒体报道，台湾警方2月1日会同云林县环保局，在云林县水林乡查获陈姓男子载运重达2 59吨...</p>
+									</li>
+								</a>
+							</ul>
+						</div>
+
+						<ul class="title_list">
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=60&id=388865&remains=true" title="市场萧条江浙倾销 养殖户煎熬一月">市场萧条江浙倾销 养殖户煎熬一月</a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=60&id=388863&remains=true" title="日评：福建消费不活跃 鸡佬选择“扫平货”">日评：福建消费不活跃 鸡佬选择“扫平货”</a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=44&id=388861&remains=true" title="中山活禽市场每月15日休市">中山活禽市场每月15日休市</a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=44&id=388859&remains=true" title="河源活禽市场每月10日休市">河源活禽市场每月10日休市</a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=44&id=388858&remains=true" title="清远活禽市场每月7日休市">清远活禽市场每月7日休市</a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=44&id=388857&remains=true" title="佛山活禽市场下周一休市 ">佛山活禽市场下周一休市 </a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=382&id=388820&remains=true" title="2015年2月6日广东开平肉鸡价格">2015年2月6日广东开平肉鸡价格</a>
+							</li>
+						</ul>
+
+					</div>
+				</li>
+
+				<li id="con_child_2" style="display:none;">
+					<div class="col">
+
+						<div>
+							<ul class="top2" style="width:auto; height:35px;">
+								<a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=40&id=388869&remains=true">
+									<li>
+										<h2>无良商贩生产销售有毒猪肉近百吨被捕</h2>
+									</li>
+								</a>
+							</ul>
+						</div>
+
+						<ul class="title_list">
+							<li><a title="广东开展“动物防疫消毒灭原日”活动" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=40&id=388867&remains=true">广东开展“动物防疫消毒灭原日”活动</a>
+							</li>
+							<li><a title="中山活禽市场每月15日休市" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=44&id=388861&remains=true">中山活禽市场每月15日休市</a>
+							</li>
+							<li><a title="河源活禽市场每月10日休市" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=44&id=388859&remains=true">河源活禽市场每月10日休市</a>
+							</li>
+							<li><a title="清远活禽市场每月7日休市" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=44&id=388858&remains=true">清远活禽市场每月7日休市</a>
+							</li>
+							<li><a title="佛山活禽市场下周一休市 " href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=44&id=388857&remains=true">佛山活禽市场下周一休市 </a>
+							</li>
+							<li><a title="珠海最快5月份推行“生鲜鸡”" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=44&id=388746&remains=true">珠海最快5月份推行“生鲜鸡”</a>
+							</li>
+							<li><a title="深圳个体户卖活禽 被罚2.3万元" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=44&id=388744&remains=true">深圳个体户卖活禽 被罚2.3万元</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+
+				<li id="con_child_3" style="display:none;">
+					<div class="col">
+
+						<div>
+							<ul class="top2" style="width:auto; height:35px;">
+								<a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=60&id=388865&remains=true">
+									<li>
+										<h2>市场萧条江浙倾销 养殖户煎熬一月</h2>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="日评：福建消费不活跃 鸡佬选择“扫平货”" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=60&id=388863&remains=true">日评：福建消费不活跃 鸡佬选择“扫平货”</a>
+							</li>
+							<li><a title="2015年02月06日江西土鸡价格大跌" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=63&id=388818&remains=true">2015年02月06日江西土鸡价格大跌</a>
+							</li>
+							<li><a title="2015年02月06日湖南土鸡价格持平" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=63&id=388817&remains=true">2015年02月06日湖南土鸡价格持平</a>
+							</li>
+							<li><a title="2015年02月06日湖北土鸡价格小涨" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=63&id=388816&remains=true">2015年02月06日湖北土鸡价格小涨</a>
+							</li>
+							<li><a title="2015年02月06日福建土鸡价格小跌" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=63&id=388815&remains=true">2015年02月06日福建土鸡价格小跌</a>
+							</li>
+							<li><a title="2015年02月06日海南土鸡价格小跌" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=63&id=388814&remains=true">2015年02月06日海南土鸡价格小跌</a>
+							</li>
+							<li><a title="2015年02月06日广西土鸡价格大跌" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=63&id=388813&remains=true">2015年02月06日广西土鸡价格大跌</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+				<li id="con_child_4" style="display:none;">
+					<div class="col">
+
+						<div>
+							<ul class="top2" style="width:auto; height:35px;">
+								<a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=220&id=388626&remains=true">
+									<li>
+										<h2>如何通过称重检测肉种鸡生长发育</h2>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="关于育雏，你不知道的事" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=220&id=388540&remains=true">关于育雏，你不知道的事</a>
+							</li>
+							<li><a title="冬季鸡饮水要把握四点" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=220&id=388524&remains=true">冬季鸡饮水要把握四点</a>
+							</li>
+							<li><a title="冬季如何设计和使用鸡舍风门" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=104&id=387658&remains=true">冬季如何设计和使用鸡舍风门</a>
+							</li>
+							<li><a title="五种家禽用药的最佳投服时间" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=220&id=387580&remains=true">五种家禽用药的最佳投服时间</a>
+							</li>
+							<li><a title="盘点几种常见的鸡抗寒饲料添加剂" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=220&id=387578&remains=true">盘点几种常见的鸡抗寒饲料添加剂</a>
+							</li>
+							<li><a title="生态鸡养殖有“五关”" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=220&id=387465&remains=true">生态鸡养殖有“五关”</a>
+							</li>
+							<li><a title="散养家禽如何预防禽流感？" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=220&id=386883&remains=true">散养家禽如何预防禽流感？</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+				<li id="con_child_5" style="display:none;">
+					<div class="col">
+
+						<div>
+							<ul class="top2" style="width:auto; height:35px;">
+								<a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=221&id=388837&remains=true">
+									<li>
+										<h2>蛋鸡节料的小技巧</h2>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="鸡呼吸疾病的病因及系统防治办法" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=216&id=374090&remains=true">鸡呼吸疾病的病因及系统防治办法</a>
+							</li>
+							<li><a title="病鸡和带毒鸡是传染性喉气管炎主要传染源" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=216&id=369054&remains=true">病鸡和带毒鸡是传染性喉气管炎主要传染源</a>
+							</li>
+							<li><a title="多雨夏季鸡冠怎么会发白？" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=218&id=367297&remains=true">多雨夏季鸡冠怎么会发白？</a>
+							</li>
+							<li><a title="蛋鸡各时期用料计算方法" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=221&id=367174&remains=true">蛋鸡各时期用料计算方法</a>
+							</li>
+							<li><a title="鸡用青饲料处理方法" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=221&id=367171&remains=true">鸡用青饲料处理方法</a>
+							</li>
+							<li><a title="鸡葡萄球菌的防治方法" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=114&id=367169&remains=true">鸡葡萄球菌的防治方法</a>
+							</li>
+							<li><a title="巧用饲料解决鸡产薄壳蛋" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=221&id=366700&remains=true">巧用饲料解决鸡产薄壳蛋</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+			<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_channel&catid=11">进入养鸡频道</a>
+			</div>
+			<div class="ad" style="/*width:320px;*/ padding: 8px 0 5px; margin-bottom:-13px;">
+				<script language="javascript" src="http://www.xinm123.com/index.php?m=poster&c=index&a=show_poster&id=147"></script>
+			</div>
+			<div class="nav topborder2">
+				<a id="pig1" onclick="setTab('pig',1,5)" href="javascript:void(0)" class="current">养猪</a>
+				<a id="pig2" onclick="setTab('pig',2,5)" href="javascript:void(0)">资讯</a>
+				<a id="pig3" onclick="setTab('pig',3,5)" href="javascript:void(0)">行情</a>
+				<a id="pig4" onclick="setTab('pig',4,5)" href="javascript:void(0)">技术</a>
+				<a id="pig5" onclick="setTab('pig',5,5)" href="javascript:void(0)">疾病</a>
+			</div>
+			<ul>
+				<li id="con_pig_1">
+					<div class="col">
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388561&remains=true">
+									<li>
+										<h2>【风云榜】扬翔：高度产业链集成的国家核心场</h2>
+										<img src="http://img.xinm123.com/2015/0203/thumb_113_75_20150203063339261.jpg" width="113" height="75" />
+										<p>无论在广西还是在全国，扬翔的种猪业务都不容忽视。它投资5亿元建设了存栏1200头公猪的全球最大...</p>
+									</li>
+								</a>
+
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388860&remains=true" title="生猪行情走势短评：猪价指数跌至新低">生猪行情走势短评：猪价指数跌至新低</a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388854&remains=true" title="2015年02月06日广东生猪出栏价格动态">2015年02月06日广东生猪出栏价格动态</a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388853&remains=true" title="2015年02月06日广西生猪出栏价格动态 ">2015年02月06日广西生猪出栏价格动态 </a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388852&remains=true" title="2015年02月06日湖南生猪出栏价格动态 ">2015年02月06日湖南生猪出栏价格动态 </a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388851&remains=true" title="2015年02月06日湖北生猪出栏价格动态">2015年02月06日湖北生猪出栏价格动态</a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388850&remains=true" title="2015年02月06日河南生猪出栏价格动态">2015年02月06日河南生猪出栏价格动态</a>
+							</li>
+							<li><a href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388849&remains=true" title="2015年02月06日川渝地区生猪出栏价格动态">2015年02月06日川渝地区生猪出栏价格动态</a>
+							</li>
+						</ul>
+
+					</div>
+				</li>
+				<li id="con_pig_2" style="display:none">
+					<div class="col">
+
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a title="运猪车GPS定位防“注水”" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=43&id=388870&remains=true">
+									<li>
+										<h2>运猪车GPS定位防“注水”</h2>
+										<img src="http://img.xinm123.com/2015/0206/thumb_113_75_20150206033214441.jpg" width="113" height="75" />
+										<p>2014年底开始，沈阳市动物检疫监管指挥平台和沈阳动物及其产品运载车辆GPS定位系统正式投入使用...</p>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="2014年中国进口猪肉65%来自欧盟" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=43&id=388829&remains=true">2014年中国进口猪肉65%来自欧盟</a>
+							</li>
+							<li><a title="内陆猪价未涨 台湾年关猪价已迎丰收" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=43&id=388825&remains=true">内陆猪价未涨 台湾年关猪价已迎丰收</a>
+							</li>
+							<li><a title="生猪出栏正处高峰 猪粮比价处黄色预警区域" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=43&id=388821&remains=true">生猪出栏正处高峰 猪粮比价处黄色预警区域</a>
+							</li>
+							<li><a title="农业发展方式转变要念好“六字诀”" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=43&id=388734&remains=true">农业发展方式转变要念好“六字诀”</a>
+							</li>
+							<li><a title="逾八成省份猪肉价格下降" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=43&id=388729&remains=true">逾八成省份猪肉价格下降</a>
+							</li>
+							<li><a title="暗访" 假肉 "作坊：3000块学费教猪肉变"牛羊肉 "" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=53&id=388660&remains=true">暗访"假肉"作坊：3000块学费教猪肉变"牛羊肉"</a>
+							</li>
+							<li><a title="对俄出口暴露国内肉企短板 猪肉出口不可轻心" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=43&id=388648&remains=true">对俄出口暴露国内肉企短板 猪肉出口不可轻心</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+				<li id="con_pig_3" style="display:none">
+					<div class="col">
+						<div>
+							<ul class="top2" style="width:auto; height:35px;">
+								<a title="2015年02月06日贵州生猪出栏价格动态" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388866&remains=true">
+									<li>
+										<h2>2015年02月06日贵州生猪出栏价格动态</h2>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="生猪行情走势短评：猪价指数跌至新低" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388860&remains=true">生猪行情走势短评：猪价指数跌至新低</a>
+							</li>
+							<li><a title="2015年02月06日河北生猪出栏价格动态" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388855&remains=true">2015年02月06日河北生猪出栏价格动态</a>
+							</li>
+							<li><a title="2015年02月06日广东生猪出栏价格动态" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388854&remains=true">2015年02月06日广东生猪出栏价格动态</a>
+							</li>
+							<li><a title="2015年02月06日广西生猪出栏价格动态 " href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388853&remains=true">2015年02月06日广西生猪出栏价格动态 </a>
+							</li>
+							<li><a title="2015年02月06日湖南生猪出栏价格动态 " href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388852&remains=true">2015年02月06日湖南生猪出栏价格动态 </a>
+							</li>
+							<li><a title="2015年02月06日湖北生猪出栏价格动态" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388851&remains=true">2015年02月06日湖北生猪出栏价格动态</a>
+							</li>
+							<li><a title="2015年02月06日河南生猪出栏价格动态" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=62&id=388850&remains=true">2015年02月06日河南生猪出栏价格动态</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+				<li id="con_pig_4" style="display:none">
+					<div class="col">
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a title="预防猪口蹄疫的几点关键性措施" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=81&id=388864&remains=true">
+									<li>
+										<h2>预防猪口蹄疫的几点关键性措施</h2>
+										<img src="http://img.xinm123.com/2015/0206/thumb_113_75_20150206024601989.png" width="113" height="75" />
+										<p>口蹄疫是由口蹄疫病毒引起的偶蹄动物一种急性、热性、高度接触性传染病，在冬春寒冷季节多发。在...</p>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="寒冬喂家畜须用草颗粒" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=81&id=388840&remains=true">寒冬喂家畜须用草颗粒</a>
+							</li>
+							<li><a title="冬春季猪舍设计应注意的小细节" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=190&id=388625&remains=true">冬春季猪舍设计应注意的小细节</a>
+							</li>
+							<li><a title="冬季提高仔猪成活率的八法" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=81&id=388531&remains=true">冬季提高仔猪成活率的八法</a>
+							</li>
+							<li><a title="规模猪场管理如何科学用药？" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=212&id=388530&remains=true">规模猪场管理如何科学用药？</a>
+							</li>
+							<li><a title="冬春季节如何防治猪流感" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=81&id=388529&remains=true">冬春季节如何防治猪流感</a>
+							</li>
+							<li><a title="养猪人最容易犯10个错误，你认同吗" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=212&id=388327&remains=true">养猪人最容易犯10个错误，你认同吗</a>
+							</li>
+							<li><a title="南方猪场管理的9大误区" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=212&id=388326&remains=true">南方猪场管理的9大误区</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+				<li id="con_pig_5" style="display:none">
+					<div class="col">
+
+						<div>
+							<ul class="top2" style="width:auto; height:35px;">
+								<a title="巧喂这些饲料能抗寒" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=224&id=388839&remains=true">
+									<li>
+										<h2>巧喂这些饲料能抗寒</h2>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="饲养畜禽添加碳酸氢钠效果好" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=224&id=388838&remains=true">饲养畜禽添加碳酸氢钠效果好</a>
+							</li>
+							<li><a title="牧草怎样饲喂才科学" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=224&id=388836&remains=true">牧草怎样饲喂才科学</a>
+							</li>
+							<li><a title="湿料喂猪注意五点" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=224&id=388537&remains=true">湿料喂猪注意五点</a>
+							</li>
+							<li><a title="养猪增肥增重十种喂养方法" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=224&id=387835&remains=true">养猪增肥增重十种喂养方法</a>
+							</li>
+							<li><a title="冬季多喂胡罗卜预防幼猪维生素A缺乏症" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=224&id=383453&remains=true">冬季多喂胡罗卜预防幼猪维生素A缺乏症</a>
+							</li>
+							<li><a title="饲料厂减轻PEDv传播风险的六大关键点" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=224&id=383377&remains=true">饲料厂减轻PEDv传播风险的六大关键点</a>
+							</li>
+							<li><a title="猪服药期间应停喂的10种东西" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=224&id=383237&remains=true">猪服药期间应停喂的10种东西</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+			<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_channel&catid=10">进入养猪频道</a>
+			</div>
+			<div class="nav topborder2">
+				<a id="qy1" onclick="setTab('qy',1,4)" href="javascript:void(0)">企业</a>
+				<a id="qy2" onclick="setTab('qy',2,4)" href="javascript:void(0)">饲料</a>
+				<a id="qy3" onclick="setTab('qy',3,4)" href="javascript:void(0)">兽药</a>
+				<a id="qy4" onclick="setTab('qy',4,4)" href="javascript:void(0)">经销商</a>
+			</div>
+			<ul>
+
+				<li id="con_qy_1" style="">
+					<div class="col">
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a title="双胞胎集团诚邀事业合作伙伴" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=198&id=388862&remains=true">
+									<li>
+										<h2>双胞胎集团诚邀事业合作伙伴</h2>
+										<img src="http://img.xinm123.com/2015/0206/thumb_113_75_20150206114859925.png" width="113" height="75" />
+										<p>双胞胎集团是中国最大的猪饲料生产企业，中国企业500强，专业专注于猪饲料的研发、生产和销售。...</p>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="天津瑞孚饲料获得进口粮加工厂资质" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=198&id=388845&remains=true">天津瑞孚饲料获得进口粮加工厂资质</a>
+							</li>
+							<li><a title="新希望未来将在多国新建食品加工基地" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=201&id=388835&remains=true">新希望未来将在多国新建食品加工基地</a>
+							</li>
+							<li><a title="农业部副部长于康震到贵港市调研" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=198&id=388833&remains=true">农业部副部长于康震到贵港市调研</a>
+							</li>
+							<li><a title="双汇发展:猪价下跌有利于公司降低成本" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=197&id=388830&remains=true">双汇发展:猪价下跌有利于公司降低成本</a>
+							</li>
+							<li><a title="大康牧业：加码新西兰优质奶源欲抢占千亿市场" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=196&id=388826&remains=true">大康牧业：加码新西兰优质奶源欲抢占千亿市场</a>
+							</li>
+							<li><a title="2014广东企业竞争力排行出炉，温氏集团力压南方航空进入20强" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=193&id=388756&remains=true">2014广东企业竞争力排行出炉，温氏集团力压南方航空进入20强</a>
+							</li>
+							<li><a title="青岛易邦：鸭传染性浆膜炎三价苗获批" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=199&id=388755&remains=true">青岛易邦：鸭传染性浆膜炎三价苗获批</a>
+							</li>
+						</ul>
+					</div>
+					<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=192">进入企业频道</a>
+					</div>
+				</li>
+				<li id="con_qy_2" style="display:none;">
+					<div class="col">
+
+						<div>
+							<ul class="top2" style="width:auto; height:35px;">
+								<a title="饲企备货高峰已过赖氨酸成交清淡" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=47&id=388844&remains=true">
+									<li>
+										<h2>饲企备货高峰已过赖氨酸成交清淡</h2>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="临储收购进度快 优质玉米供应有忧" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=47&id=388843&remains=true">临储收购进度快 优质玉米供应有忧</a>
+							</li>
+							<li><a title="饲料行业逐渐认可基差交易" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=47&id=388842&remains=true">饲料行业逐渐认可基差交易</a>
+							</li>
+							<li><a title="2月5日福建地区豆粕价格下跌10-40元/吨" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=47&id=388763&remains=true">2月5日福建地区豆粕价格下跌10-40元/吨</a>
+							</li>
+							<li><a title="2月5日广东地区豆粕价格均下跌" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=47&id=388761&remains=true">2月5日广东地区豆粕价格均下跌</a>
+							</li>
+							<li><a title="豆粕涨价或只是昙花一现" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=47&id=388759&remains=true">豆粕涨价或只是昙花一现</a>
+							</li>
+							<li><a title="2015年1月大豆豆粕市场回顾" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=47&id=388758&remains=true">2015年1月大豆豆粕市场回顾</a>
+							</li>
+							<li><a title="国际进口转向南美低价大豆" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=47&id=388751&remains=true">国际进口转向南美低价大豆</a>
+							</li>
+						</ul>
+					</div>
+					<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=15">进入饲料频道</a>
+					</div>
+				</li>
+				<li id="con_qy_3" style="display:none;">
+					<div class="col">
+
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a title="广东2015政府采购猪瘟苗中标价降50%" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=48&id=388868&remains=true">
+									<li>
+										<h2>广东2015政府采购猪瘟苗中标价降50%</h2>
+										<img src="http://img.xinm123.com/2015/0206/thumb_113_75_20150206033610678.jpg" width="113" height="75" />
+										<p>日前，广东省2015年强制免疫疫苗中标情况已经部分公布。记者发现，猪瘟苗中标价比去年同期下降明...</p>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="我国动物疫苗市场平均年增速19%" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=48&id=388643&remains=true">我国动物疫苗市场平均年增速19%</a>
+							</li>
+							<li><a title="冬季毛皮动物种兽防疫正当时" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=48&id=388637&remains=true">冬季毛皮动物种兽防疫正当时</a>
+							</li>
+							<li><a title="欧盟承诺1.8亿欧元加强动物疫病防控" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=48&id=388555&remains=true">欧盟承诺1.8亿欧元加强动物疫病防控</a>
+							</li>
+							<li><a title="口蹄疫疫情频发三价疫苗市场需求高" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=48&id=388554&remains=true">口蹄疫疫情频发三价疫苗市场需求高</a>
+							</li>
+							<li><a title="英国东南部现禽流感疫情" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=48&id=388553&remains=true">英国东南部现禽流感疫情</a>
+							</li>
+							<li><a title="吉林特研等14家企业通过兽药GMP认证" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=48&id=388552&remains=true">吉林特研等14家企业通过兽药GMP认证</a>
+							</li>
+							<li><a title="大华农等16家企业通过GMP认证" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=48&id=388551&remains=true">大华农等16家企业通过GMP认证</a>
+							</li>
+						</ul>
+					</div>
+					<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=16">进入兽药频道</a>
+					</div>
+				</li>
+
+
+
+
+				<li id="con_qy_4" style="display:none;">
+					<div class="col">
+
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a title="牧丰兽药——科技兴农、诚信为本" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=335&id=388449&remains=true">
+									<li>
+										<h2>牧丰兽药——科技兴农、诚信为本</h2>
+										<img src="http://img.xinm123.com/2015/0202/thumb_113_75_20150202073611800.jpg" width="113" height="75" />
+										<p>《农财宝典》记者 邓晓祥畜牧丰收，是我成立牧丰兽药时 起这个公司名字的初衷和愿景。罗定 市...</p>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="梅州益丰： 立志打造梅州最专业的养猪服务平台" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=335&id=388448&remains=true">梅州益丰： 立志打造梅州最专业的养猪服务平台</a>
+							</li>
+							<li><a title="华泰兴牧：急客户之所急，实力助农" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=335&id=378916&remains=true">华泰兴牧：急客户之所急，实力助农</a>
+							</li>
+							<li><a title="武岗实业粤西总部成立，下管辖15分公司" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=335&id=378915&remains=true">武岗实业粤西总部成立，下管辖15分公司</a>
+							</li>
+							<li><a title="畜博会进入倒计时，金牌经销商忙造势" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=335&id=377759&remains=true">畜博会进入倒计时，金牌经销商忙造势</a>
+							</li>
+							<li><a title="迎客松东平重点客户旅游交流活动" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=335&id=376681&remains=true">迎客松东平重点客户旅游交流活动</a>
+							</li>
+							<li><a title="玉林胜牧携手亚士可举办养殖交流会" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=335&id=376680&remains=true">玉林胜牧携手亚士可举办养殖交流会</a>
+							</li>
+							<li><a title="阳春华林达阳春市基础疫病防控乡镇会议" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=335&id=376679&remains=true">阳春华林达阳春市基础疫病防控乡镇会议</a>
+							</li>
+						</ul>
+					</div>
+					<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=335">进入金牌经销商</a>
+					</div>
+				</li>
+			</ul>
+			<div class="nav topborder2">
+				<a id="zl1" onclick="setTab('zl',1,4)" href="javascript:void(0)" class="current">专栏</a>
+				<a id="zl2" onclick="setTab('zl',2,4)" href="javascript:void(0)">农财宝典</a>
+				<a id="zl3" onclick="setTab('zl',3,4)" href="javascript:void(0)">会讯</a>
+				<a id="zl4" onclick="setTab('zl',4,4)" href="javascript:void(0)">活动</a>
+			</div>
+			<ul>
+				<li id="con_zl_1">
+					<div class="col">
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a title="2014国家科学技术奖中畜禽相关奖项整理" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=292&id=388754&remains=true">
+									<li>
+										<h2>2014国家科学技术奖中畜禽相关奖项整理</h2>
+										<img src="http://img.xinm123.com/2015/0205/thumb_113_75_20150205042112755.png" width="113" height="75" />
+										<p>1月9日，国家科学技术奖励大会在北京人民大会堂举行。2014年度国家科学技术奖励共授奖318项成果...</p>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="猪场“钱难赚，人难留” 咋破？" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=292&id=388753&remains=true">猪场“钱难赚，人难留” 咋破？</a>
+							</li>
+							<li><a title="一吨猪粪价值千元的秘密" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=292&id=388730&remains=true">一吨猪粪价值千元的秘密</a>
+							</li>
+							<li><a title="【风云榜】扬翔：高度产业链集成的国家核心场" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388561&remains=true">【风云榜】扬翔：高度产业链集成的国家核心场</a>
+							</li>
+							<li><a title="【风云榜】快大：独特的中草药产品炼就行业新锐" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388560&remains=true">【风云榜】快大：独特的中草药产品炼就行业新锐</a>
+							</li>
+							<li><a title="陈春花：成功是设计出来的" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=291&id=388557&remains=true">陈春花：成功是设计出来的</a>
+							</li>
+							<li><a title="饲料霉菌毒素中玉米赤霉烯酮对猪场的危害" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=292&id=388543&remains=true">饲料霉菌毒素中玉米赤霉烯酮对猪场的危害</a>
+							</li>
+							<li><a title="养户疑饲料有问题将厂家告上法庭" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=292&id=388452&remains=true">养户疑饲料有问题将厂家告上法庭</a>
+							</li>
+						</ul>
+						<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=277">进入专栏频道</a>
+						</div>
+					</div>
+				</li>
+
+				<li id="con_zl_2" style=" display:none">
+					<div class="col">
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a title="【风云榜】扬翔：高度产业链集成的国家核心场" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388561&remains=true">
+									<li>
+										<h2>【风云榜】扬翔：高度产业链集成的国家核心场</h2>
+										<img src="http://img.xinm123.com/2015/0203/thumb_113_75_20150203063339261.jpg" width="113" height="75" />
+										<p>无论在广西还是在全国，扬翔的种猪业务都不容忽视。它投资5亿元建设了存栏1200头公猪的全球最大...</p>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="【风云榜】快大：独特的中草药产品炼就行业新锐" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388560&remains=true">【风云榜】快大：独特的中草药产品炼就行业新锐</a>
+							</li>
+							<li><a title="【风云榜】永顺：成功改制让她焕发新活力" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388420&remains=true">【风云榜】永顺：成功改制让她焕发新活力</a>
+							</li>
+							<li><a title="论猪价低迷时猪场的应对策略" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388414&remains=true">论猪价低迷时猪场的应对策略</a>
+							</li>
+							<li><a title="【风云榜】嘉吉：老牌外企发力猪全价料战略" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388322&remains=true">【风云榜】嘉吉：老牌外企发力猪全价料战略</a>
+							</li>
+							<li><a title="农财点评：你有没有转型焦虑症？" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388162&remains=true">农财点评：你有没有转型焦虑症？</a>
+							</li>
+							<li><a title="【风云榜】毕英佐：还家禽业以清白和公正" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388161&remains=true">【风云榜】毕英佐：还家禽业以清白和公正</a>
+							</li>
+							<li><a title="【风云榜】秦英林：把养猪业做成一个幸福的产业" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=290&id=388149&remains=true">【风云榜】秦英林：把养猪业做成一个幸福的产业</a>
+							</li>
+						</ul>
+						<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=290">进入农财宝典</a>
+						</div>
+					</div>
+				</li>
+				<li id="con_zl_3" style="display:none;">
+					<div class="col">
+
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a title="圆环普免风暴刮进江门，2月4日聚焦猪病诊疗策略" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=55&id=388559&remains=true">
+									<li>
+										<h2>圆环普免风暴刮进江门，2月4日聚焦猪病诊疗策略</h2>
+										<img src="http://img.xinm123.com/2015/0203/thumb_113_75_20150203062638174.png" width="113" height="75" />
+										<p>圆环普免 财富普惠成都天邦科技进步，聚变普免风暴，全面推动财富普惠浪潮！广东江门站主办单位...</p>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="播恩杯2015新牧女郎评选启动，将开启高校海选" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=55&id=388558&remains=true">播恩杯2015新牧女郎评选启动，将开启高校海选</a>
+							</li>
+							<li><a title="走猪场揭秘温氏育种体系和成本控制，2月9日等您来！" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=55&id=388323&remains=true">走猪场揭秘温氏育种体系和成本控制，2月9日等您来！</a>
+							</li>
+							<li><a title="第三届动物免疫营养与健康养殖高峰论坛通知" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=55&id=388237&remains=true">第三届动物免疫营养与健康养殖高峰论坛通知</a>
+							</li>
+							<li><a title="中国首部新农人研究报告2月7日发布" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=55&id=387556&remains=true">中国首部新农人研究报告2月7日发布</a>
+							</li>
+							<li><a title="第一届中岸•新南方战略合作伙伴健康养猪芙蓉论坛" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=55&id=386980&remains=true">第一届中岸•新南方战略合作伙伴健康养猪芙蓉论坛</a>
+							</li>
+							<li><a title="走猪场 ：东瑞高床发酵型养猪系统何以获世界银行认可？" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=55&id=386510&remains=true">走猪场 ：东瑞高床发酵型养猪系统何以获世界银行认可？</a>
+							</li>
+							<li><a title="2015上海优质畜禽产品采购交易会" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=55&id=386383&remains=true">2015上海优质畜禽产品采购交易会</a>
+							</li>
+						</ul>
+					</div>
+					<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=55">进入会讯频道</a>
+					</div>
+				</li>
+
+				<li id="con_zl_4" style="display:none;">
+					<div class="col">
+
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a title="平衡母源抗体，先圆环再伪狂后蓝耳" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=56&id=388766&remains=true">
+									<li>
+										<h2>平衡母源抗体，先圆环再伪狂后蓝耳</h2>
+										<img src="http://img.xinm123.com/2015/0206/thumb_113_75_20150206123015973.jpg" width="113" height="75" />
+										<p>如果在临床监测中猪瘟疫苗抗体水平总是不达标，就要考虑猪场是否存在蓝耳病毒；一般来说，猪群蓝...</p>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="谭志坚：15岁的正典迎来3.0时代" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=56&id=388765&remains=true">谭志坚：15岁的正典迎来3.0时代</a>
+							</li>
+							<li><a title="曹玉良：建议母猪存栏减15-20%（伊科拜克-益牧堂答谢会）" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=56&id=388654&remains=true">曹玉良：建议母猪存栏减15-20%（伊科拜克-益牧堂答谢会）</a>
+							</li>
+							<li><a title="“外来媳妇”作代言，生鲜鸡掀起品牌浪潮" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=56&id=388562&remains=true">“外来媳妇”作代言，生鲜鸡掀起品牌浪潮</a>
+							</li>
+							<li><a title="2014年养猪行业亏损600亿元" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=56&id=388226&remains=true">2014年养猪行业亏损600亿元</a>
+							</li>
+							<li><a title="腾骏年会：2014年保持稳健增长" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=56&id=388218&remains=true">腾骏年会：2014年保持稳健增长</a>
+							</li>
+							<li><a title="广州百安获得法国诗华代理权" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=56&id=388121&remains=true">广州百安获得法国诗华代理权</a>
+							</li>
+							<li><a title="桂龙：去年70%直销 今年要扶持经销商" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=56&id=388050&remains=true">桂龙：去年70%直销 今年要扶持经销商</a>
+							</li>
+						</ul>
+					</div>
+					<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=56">进入活动频道</a>
+					</div>
+				</li>
+			</ul>
+
+			<div class="nav topborder2">
+				<a id="zc1" onclick="setTab('zc',1,4)" href="javascript:void(0)" class="current">政策法规</a>
+				<a id="zc2" onclick="setTab('zc',2,4)" href="javascript:void(0)">视频</a>
+				<a id="zc3" onclick="setTab('zc',3,4)" href="javascript:void(0)">论坛</a>
+				<a id="zc4" onclick="setTab('zc',4,4)" href="javascript:void(0)">数据</a>
+			</div>
+			<ul>
+				<li id="con_zc_1">
+					<div class="col">
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a title="从化市动物卫生监督所开展家禽H7N9流感防控工作" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=52&id=388834&remains=true">
+									<li>
+										<h2>从化市动物卫生监督所开展家禽H7N9流感防控工作</h2>
+										<img src="http://img.xinm123.com/2015/0206/thumb_113_75_20150206090720796.jpg" width="113" height="75" />
+										<p>为进一步加强家禽H7N9流感防控工作力度，2月3日上午，从化市动监所相关工作人员与从化市疾控中心...</p>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="2014年执业兽医资格考试审核不通过人员名单" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=52&id=388832&remains=true">2014年执业兽医资格考试审核不通过人员名单</a>
+							</li>
+							<li><a title="农业厅核发2014年41个《种畜禽生产经营许可证》" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=52&id=388831&remains=true">农业厅核发2014年41个《种畜禽生产经营许可证》</a>
+							</li>
+							<li><a title="国家信访局公布40件涉农事件:八成为征地拆迁" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=52&id=388828&remains=true">国家信访局公布40件涉农事件:八成为征地拆迁</a>
+							</li>
+							<li><a title="于康震：广西应大力发展生态畜牧业" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=52&id=388824&remains=true">于康震：广西应大力发展生态畜牧业</a>
+							</li>
+							<li><a title="首届“全国十佳农民”在京揭晓" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=52&id=388823&remains=true">首届“全国十佳农民”在京揭晓</a>
+							</li>
+							<li><a title="农业部认定第三批国家现代农业示范区" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=52&id=388822&remains=true">农业部认定第三批国家现代农业示范区</a>
+							</li>
+							<li><a title="农业部查处227批假兽药，4家非法兽药生产企业" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=52&id=388764&remains=true">农业部查处227批假兽药，4家非法兽药生产企业</a>
+							</li>
+						</ul>
+						<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=52">进入政策法规</a>
+						</div>
+					</div>
+				</li>
+
+				<li id="con_zc_2" style="display:none;">
+					<div class="col">
+						<div>
+							<ul class="top2" style="width:auto; ">
+								<a title="要账！短短五分钟，你看了还能不打款吗？！" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=157&id=387950&remains=true">
+									<li>
+										<h2>要账！短短五分钟，你看了还能不打款吗？！</h2>
+										<img src="http://img.xinm123.com/2015/0127/thumb_113_75_20150127041609121.jpg" width="113" height="75" />
+										<p>我从来没有想过催款，你为什么要逼我？既然逼了，为什么不快点回款？我考虑过，如果下个月你注定...</p>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="【现场】2014农财宝典农牧电商论坛（下）" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=160&id=385796&remains=true">【现场】2014农财宝典农牧电商论坛（下）</a>
+							</li>
+							<li><a title="【现场】2014农财宝典农牧电商论坛（上）" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=160&id=385795&remains=true">【现场】2014农财宝典农牧电商论坛（上）</a>
+							</li>
+							<li><a title="【现场】2014中国生猪业风云榜颁奖典礼（下）" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=160&id=385794&remains=true">【现场】2014中国生猪业风云榜颁奖典礼（下）</a>
+							</li>
+							<li><a title="【现场】2014中国生猪业风云榜颁奖典礼（上）" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=160&id=385793&remains=true">【现场】2014中国生猪业风云榜颁奖典礼（上）</a>
+							</li>
+							<li><a title="播恩杯—2014新牧女郎总决赛" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=157&id=384085&remains=true">播恩杯—2014新牧女郎总决赛</a>
+							</li>
+							<li><a title="绝！众望版《小苹果》，肽开心！" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=158&id=382530&remains=true">绝！众望版《小苹果》，肽开心！</a>
+							</li>
+							<li><a title="海大：重推实惠小猪料系列产品" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=158&id=381507&remains=true">海大：重推实惠小猪料系列产品</a>
+							</li>
+						</ul>
+						<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=14">进入视频栏目</a>
+						</div>
+					</div>
+				</li>
+
+				<li id="con_zc_3" style="display:none;">
+					<div class="col">
+						<ul class="title_list">
+							<script type="text/javascript" src="http://bbs.xinm123.com/api.php?mod=js&bid=11"></script>
+						</ul>
+						<div class="enter"><a href="http://bbs.xinm123.com/">进入论坛</a>
+						</div>
+					</div>
+				</li>
+
+				<li id="con_zc_4" style="display:none;">
+					<div class="col">
+						<div>
+							<ul class="top2" style="width:auto; height:35px;">
+								<a title="1家万头猪场全进全出设计的主要参数 " href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=359&id=381203&remains=true">
+									<li>
+										<h2>1家万头猪场全进全出设计的主要参数 </h2>
+									</li>
+								</a>
+							</ul>
+						</div>
+						<ul class="title_list">
+							<li><a title="2013年广西饲料产量 1015.93万吨" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=328&id=378527&remains=true">2013年广西饲料产量 1015.93万吨</a>
+							</li>
+							<li><a title="2013年全国饲料工业生产形势数据" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=328&id=367507&remains=true">2013年全国饲料工业生产形势数据</a>
+							</li>
+							<li><a title="图表告诉你：国内生猪产业有多猛" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=328&id=366681&remains=true">图表告诉你：国内生猪产业有多猛</a>
+							</li>
+							<li><a title="2014年中国猪肉行业市场前景分析" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=328&id=362575&remains=true">2014年中国猪肉行业市场前景分析</a>
+							</li>
+							<li><a title="统计局：2013年农村消费品市场增长明显快于城镇" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=328&id=341904&remains=true">统计局：2013年农村消费品市场增长明显快于城镇</a>
+							</li>
+							<li><a title="农业部长韩长赋：全国出栏500头猪以上占总量38.5%" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=328&id=340140&remains=true">农业部长韩长赋：全国出栏500头猪以上占总量38.5%</a>
+							</li>
+							<li><a title="2013年海大虾料下滑20%猪料增长40%" href="http://wap.xinm123.com/index.php?m=wap&a=show&catid=328&id=339404&remains=true">2013年海大虾料下滑20%猪料增长40%</a>
+							</li>
+						</ul>
+						<div class="enter"><a href="http://wap.xinm123.com/index.php?m=wap&a=wap_lists&catid=280">进入数据频道</a>
+						</div>
+					</div>
+				</li>
+			</ul>
+
+			<!---<div class="catlist">
+		     </div>
+    <div class="tc"><a href="#hd"><img src="http://cdn.xinm123.com/images/wap/top.gif" alt="" width="46" height="16" /></a></div>
+    <div class="b_adds" id="hd"></div>
+    <div class="ft">
+    	<a href="wap.xinm123.comindex.php?">新牧网手机门户</a>-<a href="http://www.xinm123.com/index.php?m=wap&c=index&a=maps">导航</a>
+    </div>
+</div>
+</body>
+</html>
+--->
+			<div class="backtotop"><a href="#top">回顶部</a>
+			</div>
+
+			<div class="ad" style="/*width:320px;*/ margin:0 auto; padding-top:5px; display:none;">
+				<script type="text/javascript">
+					 /*WAP广告移动网页，创建于2013-10-27*/
+					var cpro_id = "u1396756";
+				</script>
+				<script src="http://cpro.baidustatic.com/cpro/ui/cm.js" type="text/javascript"></script>
+			</div>
+
+			<div class="footer">
+				<div class="left"><a href="http://bbs.xinm123.com">手机论坛</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.xinm123.com/index.php">电脑版</a>
+					<br /> powered by 新牧网 &copy;&nbsp;2013</div>
+			</div>
+		</div>
+	</body>
+
+</html>

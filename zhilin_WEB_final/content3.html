@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<title>智邻小区</title>
+		<link rel="stylesheet" type="text/css" href="css_wap/style.css">
+		<script src="js/jquery-1.5.min.js"></script>
+		<script src="js/zepto.min.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/tool.js"></script>
+		<script src="js/top.js"></script>
+	</head>
+
+	<body>
+		<header class="ui-header">
+			<h1>详细内容</h1>
+			<div class="ui-header-left">
+				<a class="ui-header-ico-back" href="index.html"></a>
+			</div>
+			<div class="ui-header-right">
+				<a class="ui-header-ico-share" href=""></a>
+			</div>
+		</header>
+		<div class="c_content">
+			<div class="catpic">
+				<img src="images/小米图标.jpg" width="100%">
+			</div>
+			<div class="amain">
+				<div class="filter"></div>
+				<div class="catname">商家优惠</div>
+				<div class="title">小米之家开业筹宾，七天之内持小米设备免费维修，免费贴膜。</div>
+				<div class="info"><span class="zuozhe">智邻小区</span><span>02-20 16:48 </span><span class="hot">点击：196</span>
+				</div>
+				<div class="cont">
+					<p>
+					1 小米 为发烧而生
+　　				<br>
+					2 不管苦B、2B还是牛B,绝不装B
+　　				<br>
+					3 小米手机，你的我的大家的
+　　				<br>
+					4 只知道老鼠爱大米 不过偶尔也应该爱一爱小米的
+					<img alt=" 广告图" src="images/小米广告.jpg">
+					<br></p>
+
+
+				</div>
+			</div>
+			<div id="top">
+				<img src="images/top.png" id="goTopBtn">
+			</div>
+			<footer>
+				<div class="copy tc">西安德塔信息科技有限公司</div>
+				<div class="tecl tc"></div>
+			</footer>
+			<script>
+			</script>
+			<div style="display:none"></div>
+			<script>
+				var allA = document.getElementsByTagName('a');
+							for(var i=0;i<allA.length;i++){
+								if(allA[i].href.indexOf('tel')){
+								  allA[i].href = allA[i].href + '#mp.weixin.qq.com';
+								}
+							}
+			</script>
+	</body>
+
+</html>
